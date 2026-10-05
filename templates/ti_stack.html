@@ -2,93 +2,231 @@
 {% load static %}
 
 {% block header %}
+<!-- FontAwesome para iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Devicon para logos originales de tecnologías -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
 <style>
-    /* Fondo espacial y transparencia forzada para anular base.html */
     body, html { 
-        background-color: #030712 !important; 
-        background-image: url("{% static 'img/fondo_espacio.jpg' %}") !important;
+        background-color: #020617 !important; 
+        background-image: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.95)), url("{% static 'img/fondo_espacio.jpg' %}") !important;
         background-size: cover !important;
         background-attachment: fixed !important;
-        background-blend-mode: multiply !important;
-        color: #e2e8f0 !important;
+        color: #f8fafc !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
     header, nav, main, .container, .bg-light, .bg-white, .bg-secondary {
         background-color: transparent !important;
     }
 
-    /* Panel HUD translúcido */
-    .hud-panel {
-        background-color: rgba(15, 23, 42, 0.75) !important;
-        border: 1px solid rgba(0, 210, 255, 0.3);
+    /* Encabezado Neon Tech */
+    .header-telemetry {
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 0.9) 100%);
+        border-bottom: 2px solid #38bdf8;
+        box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Tarjetas del Stack */
+    .stack-card {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        padding: 2rem;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .stack-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(56, 189, 248, 0.2);
+        border-color: rgba(56, 189, 248, 0.6);
+    }
+
+    .stack-title {
+        color: #38bdf8;
+        font-weight: 700;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px dashed rgba(56, 189, 248, 0.3);
+        padding-bottom: 1rem;
+    }
+
+    /* Items Tecnológicos */
+    .tech-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: rgba(2, 6, 23, 0.5);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        padding: 0.8rem 1rem;
         border-radius: 8px;
-        box-shadow: inset 0 0 20px rgba(0, 210, 255, 0.05);
-        backdrop-filter: blur(5px);
+        margin-bottom: 0.8rem;
+        transition: all 0.2s ease;
     }
 
-    .hud-title {
-        color: #00d2ff;
-        letter-spacing: 2px;
-        border-bottom: 1px solid rgba(0, 210, 255, 0.3);
-        padding-bottom: 8px;
+    .tech-item:hover {
+        background: rgba(56, 189, 248, 0.1);
+        border-color: rgba(56, 189, 248, 0.3);
     }
 
-    /* Botón estilo terminal */
+    .tech-icon {
+        font-size: 2rem;
+    }
+
+    .tech-name {
+        font-weight: 600;
+        color: #f1f5f9;
+        font-size: 1.1rem;
+    }
+
+    /* Botón regreso */
     .btn-launch {
-        background-color: transparent;
-        color: #00d2ff;
-        border: 1px solid #00d2ff;
-        border-radius: 4px;
-        letter-spacing: 2px;
-        transition: all 0.3s;
+        background: transparent;
+        color: #38bdf8;
+        border: 2px solid #38bdf8;
+        border-radius: 8px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        padding: 0.8rem 2rem;
+        transition: all 0.3s ease;
         text-decoration: none;
     }
     
     .btn-launch:hover {
-        background-color: #00d2ff;
-        color: #000;
-        box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
-    }
-    
-    .terminal-text {
-        color: #00d2ff;
+        background: #38bdf8;
+        color: #020617;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
     }
 </style>
 
-<div class="py-4 mb-4" style="background: linear-gradient(90deg, rgba(3,7,18,0.4), rgba(15,23,42,0.6)); border-top: 1px solid rgba(0,210,255,0.2); border-bottom: 1px solid #00d2ff; backdrop-filter: blur(10px); margin-top: -20px;">
+<div class="header-telemetry py-5 mb-5">
     <div class="container text-center">
-        <h1 class="display-6 font-monospace mb-0" style="color: #00d2ff; text-shadow: 0 0 10px rgba(0,210,255,0.5);">
-            SYS_LOG: Stack de Desarrollo y Despliegues
+        <h1 class="display-4 fw-bolder text-white">
+            <i class="fa-solid fa-layer-group me-3" style="color: #38bdf8;"></i>Tech Stack
         </h1>
+        <p class="lead mb-0 mt-2 text-info fw-bold font-monospace" style="letter-spacing: 2px;">
+            [ ARQUITECTURA DE DESARROLLO Y DESPLIEGUE ]
+        </p>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="hud-panel p-4">
-            <h3 class="hud-title font-monospace text-uppercase">>> Desglose_Tecnologico</h3>
-            
-            <div class="p-4 my-4" style="background: rgba(0, 210, 255, 0.05); border-left: 2px solid #00d2ff;">
-                <p class="mb-0 text-light font-monospace" style="line-height: 2;">
-                    <span class="terminal-text fw-bold">> FRONTEND:</span> JavaScript, React, HTML5/CSS3, Bootstrap<br>
-                    <span class="terminal-text fw-bold">> BACKEND:</span> Python, Node.js, Express.js, Django<br>
-                    <span class="terminal-text fw-bold">> INFRAESTRUCTURA_CLOUD:</span> AWS EC2, Docker, Ubuntu/Linux<br>
-                    <span class="terminal-text fw-bold">> DATA_LAKE:</span> MongoDB, PostgreSQL
-                </p>
+<div class="row g-4 mb-5">
+    <!-- Frontend -->
+    <div class="col-md-6 col-lg-3">
+        <div class="stack-card">
+            <div class="stack-title">
+                <i class="fa-solid fa-desktop"></i> Frontend
             </div>
-            
-            <hr style="border-color: rgba(0, 210, 255, 0.3);" class="my-4">
-
-            <div class="d-flex justify-content-between align-items-center">
-                <!-- Asegúrate de que el 'href' apunte al nombre correcto de tu URL principal de TI -->
-                <a href="{% url 'inicio_ti' %}" class="btn btn-launch px-4 py-2 font-monospace text-uppercase">
-                    << Abortar y Volver
-                </a>
-                <span style="color: #94a3b8; font-size: 0.85rem;" class="font-monospace">[ CONEXIÓN ESTABLECIDA ]</span>
+            <div class="tech-item">
+                <i class="devicon-javascript-plain colored tech-icon"></i>
+                <span class="tech-name">JavaScript (ES6+)</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-react-original colored tech-icon"></i>
+                <span class="tech-name">React.js</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-html5-plain colored tech-icon"></i>
+                <span class="tech-name">HTML5 / CSS3</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-bootstrap-plain colored tech-icon"></i>
+                <span class="tech-name">Bootstrap 5</span>
             </div>
         </div>
+    </div>
+
+    <!-- Backend -->
+    <div class="col-md-6 col-lg-3">
+        <div class="stack-card">
+            <div class="stack-title">
+                <i class="fa-solid fa-server"></i> Backend
+            </div>
+            <div class="tech-item">
+                <i class="devicon-python-plain colored tech-icon"></i>
+                <span class="tech-name">Python</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-django-plain colored tech-icon text-white"></i>
+                <span class="tech-name">Django / DRF</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-nodejs-plain colored tech-icon"></i>
+                <span class="tech-name">Node.js</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-express-original tech-icon text-white"></i>
+                <span class="tech-name">Express.js</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cloud & DevOps -->
+    <div class="col-md-6 col-lg-3">
+        <div class="stack-card">
+            <div class="stack-title">
+                <i class="fa-solid fa-cloud"></i> Cloud & DevOps
+            </div>
+            <div class="tech-item">
+                <i class="devicon-amazonwebservices-original colored tech-icon"></i>
+                <span class="tech-name">AWS EC2</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-docker-plain colored tech-icon"></i>
+                <span class="tech-name">Docker</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-ubuntu-plain colored tech-icon"></i>
+                <span class="tech-name">Ubuntu Linux</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-git-plain colored tech-icon"></i>
+                <span class="tech-name">Git / GitHub</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bases de Datos -->
+    <div class="col-md-6 col-lg-3">
+        <div class="stack-card">
+            <div class="stack-title">
+                <i class="fa-solid fa-database"></i> Data Lake
+            </div>
+            <div class="tech-item">
+                <i class="devicon-mysql-plain colored tech-icon"></i>
+                <span class="tech-name">MySQL</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-postgresql-plain colored tech-icon"></i>
+                <span class="tech-name">PostgreSQL</span>
+            </div>
+            <div class="tech-item">
+                <i class="devicon-mongodb-plain colored tech-icon"></i>
+                <span class="tech-name">MongoDB</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12 text-center">
+        <a href="{% url 'inicio_ti' %}" class="btn-launch d-inline-block">
+            <i class="fa-solid fa-arrow-left me-2"></i> VOLVER AL DASHBOARD PRINCIPAL
+        </a>
     </div>
 </div>
 {% endblock %}
