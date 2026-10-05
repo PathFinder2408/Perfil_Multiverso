@@ -1,0 +1,15 @@
+{
+    "perfil": "Desarrollador y Analista de Sistemas",
+    "institucion": "INACAP",
+    "tecnologias": ["JavaScript", "Python", "MongoDB", "AWS EC2"],
+    "proyectos": [
+        {
+            "nombre": "Algoritmos de Trading Financiero",
+            "descripcion": "Automatización de estrategias de mercado con Python integrando análisis de volumen institucional."
+        },
+        {
+            "nombre": "Despliegue de Servidores",
+            "descripcion": "Configuración de entornos virtualizados utilizando Ubuntu y Windows Server 2022."
+        }
+    ]
+}

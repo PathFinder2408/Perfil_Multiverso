@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Listado de Asignaciones</h2>
+        {% if perms.obras_civiles.add_asignacion %}
+        <a href="{% url 'asignacion_create' %}" class="btn btn-success">Nueva Asignación</a>
+        {% endif %}
+    </div>
+
+    <table class="table table-striped table-hover shadow">
+        <thead class="table-dark">
+            <tr>
+                <th>Ingeniero</th>
+                <th>Proyecto</th>
+                <th>Rol</th>
+                <th>Fecha Asignación</th>
+                <th>Contrato</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asignacion in asignaciones %}
+            <tr>
+                <td>{{ asignacion.ingeniero }}</td>
+                <td>{{ asignacion.proyecto }}</td>
+                <td>{{ asignacion.rol_en_proyecto }}</td>
+                <td>{{ asignacion.fecha_asignacion }}</td>
+                <td>
+                    {% if asignacion.documento_contrato %}
+                        <a href="{{ asignacion.documento_contrato.url }}" target="_blank" class="btn btn-sm btn-info">Ver Documento</a>
+                    {% else %}
+                        No adjunto
+                    {% endif %}
+                </td>
+                <td>
+                    {% if perms.obras_civiles.change_asignacion %}
+                    <a href="{% url 'asignacion_update' asignacion.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                    {% endif %}
+                    {% if perms.obras_civiles.delete_asignacion %}
+                    <a href="{% url 'asignacion_delete' asignacion.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No se encontraron asignaciones.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

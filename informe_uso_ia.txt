@@ -1,0 +1,17 @@
+# Evidencias de Uso de Inteligencia Artificial (Evaluaciones 2 y 3)
+
+## 1. Diseño de Modelos
+**Prompt utilizado:** "Necesito diseñar tres modelos en Django para un sistema de Obras Civiles: Ingeniero, Proyecto y Asignación. El Ingeniero debe tener un campo de imagen, y la asignación debe tener un campo de archivo para contrato. Relacionalos adecuadamente y agrega campos típicos."
+**Respuesta aplicada:** La IA generó los modelos utilizando `models.ImageField`, `models.FileField` y `models.ForeignKey` con `related_name`. Se incluyó el método `__str__` y las llaves primarias en Ingeniero (rut) y Proyecto (codigo). Esto se implementó en `obras_civiles/models.py`.
+
+## 2. Construcción del CRUD con Class-Based Views
+**Prompt utilizado:** "Genera las vistas CRUD (ListView, CreateView, UpdateView, DeleteView) para los 3 modelos, protegiéndolas para que solo usuarios logueados y con el permiso adecuado puedan acceder."
+**Respuesta aplicada:** La IA recomendó usar `LoginRequiredMixin` y `PermissionRequiredMixin` indicando los permisos específicos (ej. `obras_civiles.add_ingeniero`). Se aplicó en `obras_civiles/views.py`.
+
+## 3. Implementación de Roles y Perfiles
+**Prompt utilizado:** "Necesito un script en Django que me cree automáticamente los grupos Administrador (todos los permisos), Operador (crear, modificar, consultar) y Consulta (solo consultar) para los modelos de Obras Civiles. También que cree un usuario de prueba para cada uno."
+**Respuesta aplicada:** La IA generó un script (`setup_roles.py`) que usa `Group` y `Permission` de `django.contrib.auth.models`, iterando sobre los modelos para asignar `add_`, `change_`, `delete_` y `view_` según corresponda al rol.
+
+## 4. Configuración de API REST y Seguridad JWT (Swagger)
+**Prompt utilizado:** "Dame la configuración para `settings.py` de Django REST Framework usando JWT (simplejwt) y drf-spectacular para Swagger. También genera un ejemplo de `serializers.py` que proteja los campos sensibles según el perfil."
+**Respuesta aplicada:** La IA recomendó agregar `rest_framework`, `rest_framework_simplejwt` y `drf_spectacular` en `INSTALLED_APPS`, y proveer configuración en `REST_FRAMEWORK` y `SPECTACULAR_SETTINGS`. (Fase 3 del proyecto).

@@ -1,0 +1,35 @@
+{
+    "perfil": "Desarrollador Full Stack | Cloud & IA",
+    "formacion": [
+        {
+            "titulo": "Ingeniería en Informática (En curso)",
+            "institucion": "INACAP"
+        },
+        {
+            "titulo": "Bootcamp JavaScript Trainee",
+            "institucion": "SENCE & Talento Digital"
+        }
+    ],
+    "comunicaciones": [
+        {
+            "plataforma": "LinkedIn",
+            "usuario": "Francisco Santander",
+            "url": "https://www.linkedin.com/in/pathfinder2408/"
+        },
+        {
+            "plataforma": "GitHub",
+            "usuario": "PathFinder2408",
+            "url": "https://github.com/PathFinder2408"
+        }
+    ],
+    "proyectos": [
+        {
+            "nombre": "Edific.life",
+            "descripcion": "Plataforma web funcional que conecta a expertos del rubro con usuarios que buscan realizar obras.Consolida la lógica de programación y la gestión de proyectos en una solución tecnológica aplicable al mundo real de las obras de construcción."
+        },
+        {
+            "nombre": "Algoritmos de Trading",
+            "descripcion": "Desarrollo y backtesting de estrategias automatizadas para mercados financieros aplicando análisis de datos en Python."
+        }
+    ]
+}

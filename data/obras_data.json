@@ -1,0 +1,41 @@
+{
+    "perfil": "Especialista en Construcción y Obras Civiles",
+    "experiencia": " Arquitectura y Gestión de Proyectos",
+    "formacion": [
+        {
+            "titulo": "Estudios en Arquitectura",
+            "institucion": "Universidad del Mar & UVM"
+        },
+        {
+            "titulo": "Certificación Técnica",
+            "institucion": "Soldador Calificación 3G"
+        }
+    ],
+    "especialidades": {
+        "obra_gruesa": ["Estructuras Metálicas", "Metalcon", "Techumbres PV4", "Radieres"],
+        "terminaciones": ["Paneles WPC", "Yeso Cartón", "OSB / MDF", "Melamina"],
+        "instalaciones": ["Gasfitería", "Redes de Drenaje", "Cámaras Sanitarias", "Iluminación LED"]
+    },
+    "proyectos": [
+    {
+        "nombre": "Startup Edific Construye",
+        "descripcion": "Líder de operaciones para esta iniciativa constructiva adjudicada con fondos estatales, enfocada en la cubicación, logística de materiales y ejecución en terreno."
+    },
+    {
+        "nombre": "Construcción Residencial (Cochiguaz)",
+        "descripcion": "Ejecución integral de viviendas en el Valle de Elqui, desde la obra gruesa hasta las terminaciones, adaptando los procesos constructivos a la geografía del sector."
+    },
+    {
+        "nombre": "Desarrollo Habitacional y Sanitario (Totoralillo)",
+        "descripcion": "Levantamiento de casas costeras, abarcando la nivelación de terreno, ejecución de radieres, zanjas y modificación integral de redes de alcantarillado."
+    },
+    {
+        "nombre": "Acondicionamiento de Techumbres (Farellones)",
+        "descripcion": "Reparación y refuerzo estructural de cubiertas en zona cordillerana, garantizando el aislamiento térmico y la resistencia mecánica ante cargas de nieve y clima extremo."
+    },
+    {
+        "nombre": "Ampliaciones Estructurales y Galpones",
+        "descripcion": "Diseño y montaje de extensiones habitacionales y comunitarias (incluyendo un galpón de 8x10m con escenario). Manejo de estructuras de acero, Metalcon y revestimientos."
+    }
+    ]
+}

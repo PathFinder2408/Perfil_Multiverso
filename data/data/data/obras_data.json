@@ -1,0 +1,15 @@
+{
+    "perfil": "Especialista en Obras Civiles",
+    "certificacion": "Soldador Calificación 3G",
+    "materiales_frecuentes": ["Metalcon", "metal", "OSB", "MDF", "Melamina"],
+    "proyectos": [
+        {
+            "nombre": "Iniciativa Edific",
+            "descripcion": "Gestión integral de construcción, cubicación de materiales y ejecución en terreno."
+        },
+        {
+            "nombre": "Estructuras e Instalaciones Sanitarias",
+            "descripcion": "Montaje de galpones de acero, redes de drenaje e instalación de bombas periféricas."
+        }
+    ]
+}

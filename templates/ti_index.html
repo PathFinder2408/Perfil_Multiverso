@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<style>
+    /* 1. Fondo principal y transparencia */
+    body, html { 
+        background-color: #030712 !important; 
+        background-image: url("{% static 'img/fondo_espacio.jpg' %}") !important;
+        background-size: cover !important;
+        background-attachment: fixed !important;
+        background-blend-mode: multiply !important;
+        color: #e2e8f0 !important;
+    }
+    
+    /* 2. Forzar transparencia a cualquier contenedor gris/blanco heredado de base.html */
+    header, nav, main, .container, .bg-light, .bg-white, .bg-secondary, .p-5, .p-4 {
+        background-color: transparent !important;
+    }
+
+    /* 3. Encabezado de Telemetría (Glassmorphism mejorado) */
+    .header-telemetry {
+        background: linear-gradient(90deg, rgba(3,7,18,0.4), rgba(15,23,42,0.6));
+        border-top: 1px solid rgba(0, 210, 255, 0.2);
+        border-bottom: 1px solid #00d2ff;
+        box-shadow: 0 10px 25px rgba(0, 210, 255, 0.15);
+        backdrop-filter: blur(10px); /* Efecto de cristal esmerilado sobre las estrellas */
+        margin-top: -20px; /* Sube el bloque para tapar espacios muertos */
+        padding: 30px 0;
+    }
+
+    /* 4. Paneles de Interfaz (HUD) */
+    .hud-panel {
+        background-color: rgba(15, 23, 42, 0.75) !important;
+        border: 1px solid rgba(0, 210, 255, 0.3);
+        border-radius: 8px;
+        box-shadow: inset 0 0 20px rgba(0, 210, 255, 0.05);
+        backdrop-filter: blur(5px);
+    }
+
+    .hud-title {
+        color: #00d2ff;
+        letter-spacing: 2px;
+        border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+        padding-bottom: 8px;
+    }
+
+    /* 5. Tarjetas de Proyectos */
+    .project-hud {
+        border-left: 3px solid #00d2ff;
+        background-color: rgba(3, 7, 18, 0.6);
+        transition: all 0.3s ease;
+    }
+    
+    .project-hud:hover {
+        background-color: rgba(0, 210, 255, 0.1);
+        border-left-color: #fff;
+        box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+    }
+
+    /* 6. Botón de Lanzamiento */
+    .btn-launch {
+        background-color: transparent;
+        color: #00d2ff;
+        border: 1px solid #00d2ff;
+        border-radius: 4px;
+        letter-spacing: 3px;
+        transition: all 0.3s;
+    }
+    
+    .btn-launch:hover {
+        background-color: #00d2ff;
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    }
+
+    /* 7. Bloques de Comunicación */
+    .comms-block {
+        border: 1px solid rgba(0, 210, 255, 0.2);
+        background: rgba(0, 210, 255, 0.05);
+        border-radius: 4px;
+        text-decoration: none;
+        display: block;
+        transition: all 0.2s;
+    }
+    
+    .comms-block:hover {
+        background: rgba(0, 210, 255, 0.15);
+        border-color: #00d2ff;
+    }
+</style>
+<div class="header-telemetry py-4 mb-4">
+    <div class="container text-center">
+        <h1 class="display-5 font-monospace mb-0" style="color: #00d2ff; text-shadow: 0 0 10px rgba(0,210,255,0.5);">
+            OBJETIVO: {{ datos.perfil }}
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Columna Izquierda: Imagen y Formación -->
+    <div class="col-md-5 mb-4">
+        <div class="hud-panel p-3 h-100">
+            <div class="border border-info mb-3 p-1" style="border-color: rgba(0,210,255,0.3) !important;">
+                <img src="{% static 'img/tech_header.jpg' %}" class="img-fluid w-100" style="filter: contrast(1.2) saturate(1.5) hue-rotate(190deg);" alt="Arquitectura TI">
+            </div>
+            
+            <h4 class="hud-title font-monospace mt-4 text-uppercase">>> Datos_Formacion</h4>
+            <ul class="list-unstyled mt-3 font-monospace">
+                {% for item in datos.formacion %}
+                <li class="mb-3 p-2" style="border-left: 2px solid rgba(255,255,255,0.2);">
+                    <span class="text-white fw-bold">{{ item.titulo }}</span><br>
+                    <span style="color: #94a3b8; font-size: 0.85rem;">LOC: {{ item.institucion }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Columna Derecha: Redes y Proyectos -->
+    <div class="col-md-7">
+        
+        <!-- Enlaces de Comunicación (Reemplaza a las Tecnologías) -->
+        <div class="hud-panel p-4 mb-4">
+            <h3 class="hud-title font-monospace text-uppercase">>> Enlaces_De_Comunicacion</h3>
+            <div class="row mt-4">
+                {% for red in datos.comunicaciones %}
+                <div class="col-md-6 mb-3">
+                    <a href="{{ red.url }}" target="_blank" class="comms-block p-3">
+                        <span class="text-white fw-bold font-monospace text-uppercase">> {{ red.plataforma }}</span><br>
+                        <span style="color: #00d2ff; font-size: 1.1rem;" class="font-monospace">USER: {{ red.usuario }}</span>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Proyectos -->
+        <div class="mt-4">
+            <h3 class="hud-title font-monospace text-white border-light text-uppercase">>> Trabajos_Realizados</h3>
+            <div class="row mt-3">
+                {% for proyecto in datos.proyectos %}
+                <div class="col-12 mb-3">
+                    <div class="project-hud p-3">
+                        <h5 class="fw-bold mb-1" style="color: #e2e8f0;">{{ proyecto.nombre }}</h5>
+                        <p class="mb-0" style="color: #94a3b8; font-size: 0.9rem;">{{ proyecto.descripcion }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <a href="{% url 'stack_ti' %}" class="btn btn-launch w-100 mt-3 p-3 font-monospace fw-bold text-uppercase">
+            [ Ver Tecnologias y Stack de Desarrollo ]
+        </a>
+    </div>
+</div>
+{% endblock %}
