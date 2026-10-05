@@ -2,159 +2,321 @@
 {% load static %}
 
 {% block header %}
+<!-- Incluimos FontAwesome para iconos profesionales -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-    /* 1. Fondo principal y transparencia */
+    /* Fondo principal y transparencia */
     body, html { 
-        background-color: #030712 !important; 
-        background-image: url("{% static 'img/fondo_espacio.jpg' %}") !important;
+        background-color: #020617 !important; 
+        background-image: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.95)), url("{% static 'img/fondo_espacio.jpg' %}") !important;
         background-size: cover !important;
         background-attachment: fixed !important;
-        background-blend-mode: multiply !important;
-        color: #e2e8f0 !important;
+        color: #f8fafc !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
-    /* 2. Forzar transparencia a cualquier contenedor gris/blanco heredado de base.html */
-    header, nav, main, .container, .bg-light, .bg-white, .bg-secondary, .p-5, .p-4 {
+    main, .container, .bg-light, .bg-white {
         background-color: transparent !important;
     }
 
-    /* 3. Encabezado de Telemetría (Glassmorphism mejorado) */
+    /* Encabezado Neon Tech */
     .header-telemetry {
-        background: linear-gradient(90deg, rgba(3,7,18,0.4), rgba(15,23,42,0.6));
-        border-top: 1px solid rgba(0, 210, 255, 0.2);
-        border-bottom: 1px solid #00d2ff;
-        box-shadow: 0 10px 25px rgba(0, 210, 255, 0.15);
-        backdrop-filter: blur(10px); /* Efecto de cristal esmerilado sobre las estrellas */
-        margin-top: -20px; /* Sube el bloque para tapar espacios muertos */
-        padding: 30px 0;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 0.9) 100%);
+        border-bottom: 2px solid #38bdf8;
+        box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
     }
 
-    /* 4. Paneles de Interfaz (HUD) */
+    /* Paneles de Interfaz Glassmorphism */
     .hud-panel {
-        background-color: rgba(15, 23, 42, 0.75) !important;
-        border: 1px solid rgba(0, 210, 255, 0.3);
-        border-radius: 8px;
-        box-shadow: inset 0 0 20px rgba(0, 210, 255, 0.05);
-        backdrop-filter: blur(5px);
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hud-panel:hover {
+        box-shadow: 0 20px 40px rgba(56, 189, 248, 0.1);
+        border-color: rgba(56, 189, 248, 0.4);
     }
 
     .hud-title {
-        color: #00d2ff;
-        letter-spacing: 2px;
-        border-bottom: 1px solid rgba(0, 210, 255, 0.3);
-        padding-bottom: 8px;
+        color: #38bdf8;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
-    /* 5. Tarjetas de Proyectos */
-    .project-hud {
-        border-left: 3px solid #00d2ff;
-        background-color: rgba(3, 7, 18, 0.6);
+    /* Items de Educación / Formación */
+    .edu-item {
+        background: rgba(2, 6, 23, 0.5);
+        border-left: 4px solid #38bdf8;
+        padding: 1rem 1.2rem;
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 1rem;
         transition: all 0.3s ease;
     }
-    
-    .project-hud:hover {
-        background-color: rgba(0, 210, 255, 0.1);
-        border-left-color: #fff;
-        box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+
+    .edu-item:hover {
+        background: rgba(56, 189, 248, 0.1);
+        border-left-color: #0ea5e9;
     }
 
-    /* 6. Botón de Lanzamiento */
-    .btn-launch {
-        background-color: transparent;
-        color: #00d2ff;
-        border: 1px solid #00d2ff;
+    .edu-title {
+        color: #f1f5f9;
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .edu-meta {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        font-family: monospace;
+    }
+
+    /* Tarjetas de Proyectos GitHub */
+    .project-card {
+        background: rgba(2, 6, 23, 0.7);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .project-card:hover {
+        background: rgba(15, 23, 42, 0.9);
+        border-color: #38bdf8;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+    }
+
+    .project-title {
+        color: #f8fafc;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+        color: #cbd5e1;
+        font-size: 0.95rem;
+        flex-grow: 1;
+    }
+
+    .tech-tag {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+        background: rgba(56, 189, 248, 0.15);
+        color: #7dd3fc;
         border-radius: 4px;
-        letter-spacing: 3px;
-        transition: all 0.3s;
+        font-family: monospace;
+        margin-right: 0.4rem;
+        margin-top: 0.5rem;
+        display: inline-block;
+    }
+
+    /* Botones de acción */
+    .btn-launch {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        padding: 1rem 2rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
     }
     
     .btn-launch:hover {
-        background-color: #00d2ff;
-        color: #000;
-        box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+        background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(14, 165, 233, 0.5);
     }
 
-    /* 7. Bloques de Comunicación */
-    .comms-block {
-        border: 1px solid rgba(0, 210, 255, 0.2);
-        background: rgba(0, 210, 255, 0.05);
-        border-radius: 4px;
+    /* Enlaces Sociales */
+    .social-link {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: rgba(2, 6, 23, 0.5);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 1rem;
+        border-radius: 8px;
+        color: #f1f5f9;
         text-decoration: none;
-        display: block;
-        transition: all 0.2s;
+        transition: all 0.3s ease;
     }
-    
-    .comms-block:hover {
-        background: rgba(0, 210, 255, 0.15);
-        border-color: #00d2ff;
+
+    .social-link:hover {
+        background: rgba(56, 189, 248, 0.1);
+        border-color: #38bdf8;
+        color: #38bdf8;
+    }
+
+    .social-icon {
+        font-size: 2rem;
+        color: #38bdf8;
     }
 </style>
-<div class="header-telemetry py-4 mb-4">
+
+<!-- Encabezado Neon -->
+<div class="header-telemetry py-5 mb-4">
     <div class="container text-center">
-        <h1 class="display-5 font-monospace mb-0" style="color: #00d2ff; text-shadow: 0 0 10px rgba(0,210,255,0.5);">
-            OBJETIVO: {{ datos.perfil }}
+        <h1 class="display-4 fw-bolder text-white">
+            <i class="fa-solid fa-code me-3" style="color: #38bdf8;"></i>Desarrollador Full Stack
         </h1>
+        <p class="lead mb-0 mt-2 text-info fw-bold font-monospace" style="letter-spacing: 2px;">
+            [ SOFTWARE ENGINEERING & CLOUD ARCHITECTURE ]
+        </p>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <!-- Columna Izquierda: Imagen y Formación -->
-    <div class="col-md-5 mb-4">
-        <div class="hud-panel p-3 h-100">
-            <div class="border border-info mb-3 p-1" style="border-color: rgba(0,210,255,0.3) !important;">
-                <img src="{% static 'img/tech_header.jpg' %}" class="img-fluid w-100" style="filter: contrast(1.2) saturate(1.5) hue-rotate(190deg);" alt="Arquitectura TI">
+<div class="row g-4 mt-2">
+    <!-- Columna Izquierda: Formación y Contacto -->
+    <div class="col-lg-5">
+        
+        <!-- Panel de Formación -->
+        <div class="hud-panel p-4 mb-4">
+            <h4 class="hud-title">
+                <i class="fa-solid fa-graduation-cap"></i> Formación y Certificaciones
+            </h4>
+            
+            <div class="edu-item">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="edu-title">Ingeniería en Informática</div>
+                    <span class="badge bg-primary">En Curso</span>
+                </div>
+                <div class="edu-meta"><i class="fa-solid fa-building-columns me-1"></i> INACAP</div>
+                <p class="text-muted small mt-2 mb-0">Especialización en desarrollo de software, arquitectura de sistemas y bases de datos relacionales.</p>
+            </div>
+
+            <div class="edu-item">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="edu-title">Bootcamp Full Stack JavaScript Trainee V2.0</div>
+                    <span class="badge bg-success"><i class="fa-solid fa-check me-1"></i> Aprobado</span>
+                </div>
+                <div class="edu-meta mt-1"><i class="fa-solid fa-certificate me-1"></i> SENCE & Talento Digital / OTEC Posiciona</div>
+                <p class="text-muted small mt-2 mb-0">Programa intensivo de desarrollo web full stack abarcando frontend y backend con tecnologías del ecosistema JS.</p>
             </div>
             
-            <h4 class="hud-title font-monospace mt-4 text-uppercase">>> Datos_Formacion</h4>
-            <ul class="list-unstyled mt-3 font-monospace">
-                {% for item in datos.formacion %}
-                <li class="mb-3 p-2" style="border-left: 2px solid rgba(255,255,255,0.2);">
-                    <span class="text-white fw-bold">{{ item.titulo }}</span><br>
-                    <span style="color: #94a3b8; font-size: 0.85rem;">LOC: {{ item.institucion }}</span>
-                </li>
-                {% endfor %}
-            </ul>
+            <!-- Aquí puedes ir agregando más cursos -->
+            <div class="edu-item" style="border-left-color: #64748b;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="edu-title text-muted">Próximos Certificados...</div>
+                </div>
+                <div class="edu-meta mt-1 text-muted">Aprendizaje continuo</div>
+            </div>
+        </div>
+
+        <!-- Panel de Redes -->
+        <div class="hud-panel p-4">
+            <h4 class="hud-title">
+                <i class="fa-solid fa-network-wired"></i> Redes y Contacto
+            </h4>
+            
+            <a href="https://github.com/PathFinder2408" target="_blank" class="social-link mb-3">
+                <i class="fa-brands fa-github social-icon"></i>
+                <div>
+                    <div class="fw-bold">GitHub Repository</div>
+                    <div class="font-monospace text-muted small">@PathFinder2408</div>
+                </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/francisco-santander/" target="_blank" class="social-link">
+                <i class="fa-brands fa-linkedin social-icon"></i>
+                <div>
+                    <div class="fw-bold">LinkedIn Profile</div>
+                    <div class="font-monospace text-muted small">Francisco Santander</div>
+                </div>
+            </a>
         </div>
     </div>
 
-    <!-- Columna Derecha: Redes y Proyectos -->
-    <div class="col-md-7">
-        
-        <!-- Enlaces de Comunicación (Reemplaza a las Tecnologías) -->
-        <div class="hud-panel p-4 mb-4">
-            <h3 class="hud-title font-monospace text-uppercase">>> Enlaces_De_Comunicacion</h3>
-            <div class="row mt-4">
-                {% for red in datos.comunicaciones %}
-                <div class="col-md-6 mb-3">
-                    <a href="{{ red.url }}" target="_blank" class="comms-block p-3">
-                        <span class="text-white fw-bold font-monospace text-uppercase">> {{ red.plataforma }}</span><br>
-                        <span style="color: #00d2ff; font-size: 1.1rem;" class="font-monospace">USER: {{ red.usuario }}</span>
-                    </a>
-                </div>
-                {% endfor %}
+    <!-- Columna Derecha: Proyectos GitHub -->
+    <div class="col-lg-7">
+        <div class="hud-panel p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="hud-title mb-0">
+                    <i class="fa-solid fa-terminal"></i> Proyectos Destacados
+                </h3>
+                <a href="https://github.com/PathFinder2408" target="_blank" class="btn btn-sm btn-outline-info rounded-pill">
+                    Ver todos en GitHub <i class="fa-solid fa-arrow-right ms-1"></i>
+                </a>
             </div>
-        </div>
 
-        <!-- Proyectos -->
-        <div class="mt-4">
-            <h3 class="hud-title font-monospace text-white border-light text-uppercase">>> Trabajos_Realizados</h3>
-            <div class="row mt-3">
-                {% for proyecto in datos.proyectos %}
-                <div class="col-12 mb-3">
-                    <div class="project-hud p-3">
-                        <h5 class="fw-bold mb-1" style="color: #e2e8f0;">{{ proyecto.nombre }}</h5>
-                        <p class="mb-0" style="color: #94a3b8; font-size: 0.9rem;">{{ proyecto.descripcion }}</p>
+            <div class="row g-3">
+                <!-- Proyecto 1 -->
+                <div class="col-md-12">
+                    <div class="project-card">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="project-title"><i class="fa-regular fa-folder-open text-info me-2"></i> Backend Perfil Multiverso</h4>
+                            <a href="https://github.com/PathFinder2408/Perfil_Multiverso" target="_blank" class="text-info"><i class="fa-brands fa-github fs-4"></i></a>
+                        </div>
+                        <p class="project-desc mt-2">API RESTful y plataforma administrativa construida para unificar portafolios profesionales. Incluye autenticación por JWT, vistas basadas en clases, roles de usuario granulares y despliegue preparado para AWS EC2.</p>
+                        <div>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">Django REST Framework</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">JWT</span>
+                        </div>
                     </div>
                 </div>
-                {% endfor %}
+
+                <!-- Proyecto 2 -->
+                <div class="col-md-12">
+                    <div class="project-card">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="project-title"><i class="fa-solid fa-globe text-info me-2"></i> Edific.life</h4>
+                        </div>
+                        <p class="project-desc mt-2">Plataforma web funcional que conecta a expertos del rubro con usuarios que buscan realizar obras. Consolida la lógica de programación y la gestión de proyectos en una solución tecnológica aplicable al mundo real de la construcción.</p>
+                        <div>
+                            <span class="tech-tag">Full Stack</span>
+                            <span class="tech-tag">Web Development</span>
+                            <span class="tech-tag">Gestión de Proyectos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proyecto 3 -->
+                <div class="col-md-12">
+                    <div class="project-card">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="project-title"><i class="fa-solid fa-chart-line text-info me-2"></i> Algoritmos de Trading</h4>
+                        </div>
+                        <p class="project-desc mt-2">Desarrollo y backtesting de estrategias automatizadas para mercados financieros aplicando análisis de datos, matemáticas financieras y programación lógica en Python.</p>
+                        <div>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Data Analysis</span>
+                            <span class="tech-tag">Fintech</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="{% url 'stack_ti' %}" class="btn btn-launch w-100 fs-5 text-uppercase">
+                    <i class="fa-solid fa-layer-group me-2"></i> Ver Stack Tecnológico Completo
+                </a>
             </div>
         </div>
-
-        <a href="{% url 'stack_ti' %}" class="btn btn-launch w-100 mt-3 p-3 font-monospace fw-bold text-uppercase">
-            [ Ver Tecnologias y Stack de Desarrollo ]
-        </a>
     </div>
 </div>
 {% endblock %}
