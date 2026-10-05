@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block header %}
+<style>
+    body { background-color: #020617 !important; color: #f8fafc !important; }
+    main, .container, .bg-light, .bg-white { background-color: transparent !important; }
+    .hud-panel {
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(56, 189, 248, 0.4);
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    }
+</style>
+<div class="py-5 text-center">
+    <h1 class="display-5 fw-bolder text-info"><i class="fa-solid fa-pen-to-square"></i> Gestión de Perfil TI</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-5">
+    <div class="col-md-8">
+        <div class="hud-panel p-5">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="mt-4 text-end">
+                    <a href="{% url 'inicio_ti' %}" class="btn btn-secondary me-2">Cancelar</a>
+                    <button type="submit" class="btn btn-info fw-bold text-dark">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

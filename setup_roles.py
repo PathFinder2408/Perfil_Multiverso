@@ -59,3 +59,10 @@ def setup():
 
 if __name__ == '__main__':
     setup()
+
+    # Nuevos permisos de Arquitectura TI
+    ti_models = ['proyectodigital', 'certificacion']
+    ti_perms = Permission.objects.filter(content_type__model__in=ti_models)
+    admin_group.permissions.add(*ti_perms)
+    operador_group.permissions.add(*ti_perms.filter(codename__startswith='add_') | ti_perms.filter(codename__startswith='change_'))
+    print('Permisos TI actualizados.')

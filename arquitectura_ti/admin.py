@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Tecnologia, ProyectoDigital, Certificacion
 
-# Register your models here.
+admin.site.register(Tecnologia)
+admin.site.register(ProyectoDigital)
+admin.site.register(Certificacion)

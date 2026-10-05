@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block header %}
-<!-- Incluimos FontAwesome para iconos profesionales -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 
 <style>
     /* Fondo principal y transparencia */
@@ -33,7 +33,6 @@
     .hud-panel {
         background: rgba(15, 23, 42, 0.6);
         backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(56, 189, 248, 0.2);
         border-radius: 12px;
         box-shadow: 0 15px 35px rgba(0,0,0,0.4);
@@ -64,6 +63,7 @@
         border-radius: 0 8px 8px 0;
         margin-bottom: 1rem;
         transition: all 0.3s ease;
+        position: relative;
     }
 
     .edu-item:hover {
@@ -94,6 +94,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
+        position: relative;
     }
     
     .project-card:hover {
@@ -172,6 +173,12 @@
         font-size: 2rem;
         color: #38bdf8;
     }
+
+    .admin-controls {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
 </style>
 
 <!-- Encabezado Neon -->
@@ -188,41 +195,51 @@
 {% endblock %}
 
 {% block content %}
-<div class="row g-4 mt-2">
+<div class="row g-4 mt-2 mb-5">
     <!-- Columna Izquierda: Formación y Contacto -->
     <div class="col-lg-5">
         
         <!-- Panel de Formación -->
         <div class="hud-panel p-4 mb-4">
-            <h4 class="hud-title">
-                <i class="fa-solid fa-graduation-cap"></i> Formación y Certificaciones
-            </h4>
-            
-            <div class="edu-item">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div class="edu-title">Ingeniería en Informática</div>
-                    <span class="badge bg-primary">En Curso</span>
-                </div>
-                <div class="edu-meta"><i class="fa-solid fa-building-columns me-1"></i> INACAP</div>
-                <p class="text-muted small mt-2 mb-0">Especialización en desarrollo de software, arquitectura de sistemas y bases de datos relacionales.</p>
-            </div>
-
-            <div class="edu-item">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div class="edu-title">Bootcamp Full Stack JavaScript Trainee V2.0</div>
-                    <span class="badge bg-success"><i class="fa-solid fa-check me-1"></i> Aprobado</span>
-                </div>
-                <div class="edu-meta mt-1"><i class="fa-solid fa-certificate me-1"></i> SENCE & Talento Digital / OTEC Posiciona</div>
-                <p class="text-muted small mt-2 mb-0">Programa intensivo de desarrollo web full stack abarcando frontend y backend con tecnologías del ecosistema JS.</p>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="hud-title mb-0">
+                    <i class="fa-solid fa-graduation-cap"></i> Formación y Certificaciones
+                </h4>
+                {% if perms.arquitectura_ti.add_certificacion %}
+                    <a href="{% url 'ti_certificacion_create' %}" class="btn btn-sm btn-outline-info rounded-circle" title="Agregar Certificación"><i class="fa-solid fa-plus"></i></a>
+                {% endif %}
             </div>
             
-            <!-- Aquí puedes ir agregando más cursos -->
-            <div class="edu-item" style="border-left-color: #64748b;">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div class="edu-title text-muted">Próximos Certificados...</div>
+            {% for cert in certificaciones_db %}
+            <div class="edu-item">
+                {% if perms.arquitectura_ti.change_certificacion %}
+                    <div class="admin-controls">
+                        <a href="{% url 'ti_certificacion_update' cert.pk %}" class="text-warning me-2"><i class="fa-solid fa-pen"></i></a>
+                        <a href="{% url 'ti_certificacion_delete' cert.pk %}" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                {% endif %}
+                
+                <div class="d-flex justify-content-between align-items-start pe-5">
+                    <div class="edu-title">{{ cert.titulo }}</div>
+                    {% if cert.en_curso %}
+                        <span class="badge bg-primary">En Curso</span>
+                    {% else %}
+                        <span class="badge bg-success"><i class="fa-solid fa-check me-1"></i> Aprobado</span>
+                    {% endif %}
                 </div>
-                <div class="edu-meta mt-1 text-muted">Aprendizaje continuo</div>
+                <div class="edu-meta mt-1"><i class="fa-solid fa-building-columns me-1"></i> {{ cert.institucion }}</div>
+                {% if cert.fecha_obtencion %}
+                    <p class="text-muted small mt-2 mb-0"><i class="fa-regular fa-calendar me-1"></i> {{ cert.fecha_obtencion|date:"F Y" }}</p>
+                {% endif %}
+                {% if cert.credencial_url %}
+                    <a href="{{ cert.credencial_url }}" target="_blank" class="text-info small mt-1 d-block"><i class="fa-solid fa-link me-1"></i> Ver Credencial</a>
+                {% endif %}
             </div>
+            {% empty %}
+                <div class="edu-item" style="border-left-color: #64748b;">
+                    <div class="edu-title text-muted">Aún no hay certificaciones registradas.</div>
+                </div>
+            {% endfor %}
         </div>
 
         <!-- Panel de Redes -->
@@ -256,59 +273,52 @@
                 <h3 class="hud-title mb-0">
                     <i class="fa-solid fa-terminal"></i> Proyectos Destacados
                 </h3>
-                <a href="https://github.com/PathFinder2408" target="_blank" class="btn btn-sm btn-outline-info rounded-pill">
-                    Ver todos en GitHub <i class="fa-solid fa-arrow-right ms-1"></i>
-                </a>
+                <div>
+                    {% if perms.arquitectura_ti.add_proyectodigital %}
+                        <a href="{% url 'ti_proyecto_create' %}" class="btn btn-sm btn-info me-2"><i class="fa-solid fa-plus me-1"></i> Agregar Proyecto</a>
+                    {% endif %}
+                    <a href="https://github.com/PathFinder2408" target="_blank" class="btn btn-sm btn-outline-info rounded-pill">
+                        Ver GitHub <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
             </div>
 
             <div class="row g-3">
-                <!-- Proyecto 1 -->
+                {% for proyecto in proyectos_db %}
                 <div class="col-md-12">
                     <div class="project-card">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="project-title"><i class="fa-regular fa-folder-open text-info me-2"></i> Backend Perfil Multiverso</h4>
-                            <a href="https://github.com/PathFinder2408/Perfil_Multiverso" target="_blank" class="text-info"><i class="fa-brands fa-github fs-4"></i></a>
+                        {% if perms.arquitectura_ti.change_proyectodigital %}
+                            <div class="admin-controls">
+                                <a href="{% url 'ti_proyecto_update' proyecto.pk %}" class="text-warning me-2"><i class="fa-solid fa-pen"></i></a>
+                                <a href="{% url 'ti_proyecto_delete' proyecto.pk %}" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        {% endif %}
+
+                        <div class="d-flex justify-content-between pe-5">
+                            <h4 class="project-title"><i class="fa-regular fa-folder-open text-info me-2"></i> {{ proyecto.nombre }}</h4>
+                            {% if proyecto.github_url %}
+                                <a href="{{ proyecto.github_url }}" target="_blank" class="text-info"><i class="fa-brands fa-github fs-4"></i></a>
+                            {% endif %}
                         </div>
-                        <p class="project-desc mt-2">API RESTful y plataforma administrativa construida para unificar portafolios profesionales. Incluye autenticación por JWT, vistas basadas en clases, roles de usuario granulares y despliegue preparado para AWS EC2.</p>
+                        <p class="project-desc mt-2">{{ proyecto.descripcion }}</p>
                         <div>
-                            <span class="tech-tag">Django</span>
-                            <span class="tech-tag">Django REST Framework</span>
-                            <span class="tech-tag">MySQL</span>
-                            <span class="tech-tag">JWT</span>
+                            {% for tech in proyecto.tecnologias.all %}
+                                <span class="tech-tag">
+                                    {% if tech.icono_css %}
+                                        <i class="{{ tech.icono_css }} me-1"></i>
+                                    {% endif %}
+                                    {{ tech.nombre }}
+                                </span>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-
-                <!-- Proyecto 2 -->
-                <div class="col-md-12">
-                    <div class="project-card">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="project-title"><i class="fa-solid fa-globe text-info me-2"></i> Edific.life</h4>
-                        </div>
-                        <p class="project-desc mt-2">Plataforma web funcional que conecta a expertos del rubro con usuarios que buscan realizar obras. Consolida la lógica de programación y la gestión de proyectos en una solución tecnológica aplicable al mundo real de la construcción.</p>
-                        <div>
-                            <span class="tech-tag">Full Stack</span>
-                            <span class="tech-tag">Web Development</span>
-                            <span class="tech-tag">Gestión de Proyectos</span>
-                        </div>
-                    </div>
+                {% empty %}
+                <div class="col-12 text-center text-muted py-4">
+                    <i class="fa-solid fa-box-open fs-1 mb-2"></i>
+                    <p>No hay proyectos registrados en la base de datos.</p>
                 </div>
-
-                <!-- Proyecto 3 -->
-                <div class="col-md-12">
-                    <div class="project-card">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="project-title"><i class="fa-solid fa-chart-line text-info me-2"></i> Algoritmos de Trading</h4>
-                        </div>
-                        <p class="project-desc mt-2">Desarrollo y backtesting de estrategias automatizadas para mercados financieros aplicando análisis de datos, matemáticas financieras y programación lógica en Python.</p>
-                        <div>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Data Analysis</span>
-                            <span class="tech-tag">Fintech</span>
-                        </div>
-                    </div>
-                </div>
-
+                {% endfor %}
             </div>
             
             <div class="text-center mt-5">
