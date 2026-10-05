@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Listado de Ingenieros</h2>
+        <h2>Equipo de Trabajo</h2>
         {% if perms.obras_civiles.add_ingeniero %}
-        <a href="{% url 'ingeniero_create' %}" class="btn btn-success">Nuevo Ingeniero</a>
+        <a href="{% url 'ingeniero_create' %}" class="btn btn-success">Nuevo Miembro</a>
         {% endif %}
     </div>
 
@@ -52,7 +52,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6" class="text-center">No se encontraron ingenieros.</td>
+                <td colspan="6" class="text-center">No se encontraron miembros del equipo.</td>
             </tr>
             {% endfor %}
         </tbody>

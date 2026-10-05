@@ -27,7 +27,7 @@ class IngenieroCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Agregar Ingeniero'
+        context['titulo'] = 'Agregar Miembro al Equipo'
         return context
 
 class IngenieroUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -39,7 +39,7 @@ class IngenieroUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Modificar Ingeniero'
+        context['titulo'] = 'Modificar Miembro del Equipo'
         return context
 
 class IngenieroDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
@@ -126,3 +126,10 @@ class AsignacionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVi
     template_name = 'obras_civiles/confirm_delete.html'
     success_url = reverse_lazy('asignacion_list')
     permission_required = 'obras_civiles.delete_asignacion'
+
+class PublicProyectoListView(ListView):
+    model = Proyecto
+    template_name = 'obras_certificacion.html'
+    context_object_name = 'proyectos'
+    def get_queryset(self):
+        return Proyecto.objects.filter(activo=True).order_by('-fecha_inicio')

@@ -167,3 +167,10 @@ MAILERS = {
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+import django.db.backends.mysql.base
+django.db.backends.mysql.base.DatabaseWrapper.check_database_version_supported = lambda self: True
+
+import django.db.backends.mysql.features
+django.db.backends.mysql.features.DatabaseFeatures.can_return_columns_from_insert = property(lambda self: False)
+django.db.backends.mysql.features.DatabaseFeatures.can_return_rows_from_bulk_insert = property(lambda self: False)

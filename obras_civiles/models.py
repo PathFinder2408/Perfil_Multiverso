@@ -20,6 +20,7 @@ class Proyecto(models.Model):
     presupuesto = models.DecimalField(max_digits=12, decimal_places=2)
     fecha_inicio = models.DateField()
     activo = models.BooleanField(default=True)
+    imagen = models.ImageField(upload_to='proyectos/', blank=True, null=True)
 
     def __str__(self):
         return f"[{self.codigo}] {self.nombre}"
